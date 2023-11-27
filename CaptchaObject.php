@@ -10,4 +10,5 @@ class CaptchaObject
     public $creationTime;
     public $code;
     public $code_display;
+    public $captchaAudioData;
 }

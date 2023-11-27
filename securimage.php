@@ -680,6 +680,8 @@ class Securimage
      */
     protected $gdsignaturecolor;
 
+    protected int|false $gdnoisecolor;
+
     /**
      * Create a new securimage object, pass options to set in the constructor.
      *
@@ -1372,7 +1374,7 @@ class Securimage
                 require_once dirname(__FILE__) . '/WavFile.php';
                 $audio = $this->getAudibleCode();
 
-                if (strtolower($format) == 'mp3') {
+                if (strtolower($format ?? '') == 'mp3') {
                     $audio = $this->wavToMp3($audio);
                 }
 
@@ -1978,9 +1980,9 @@ class Securimage
         $py       = array(); // y coordinates of poles
         $rad      = array(); // radius of distortion from pole
         $amp      = array(); // amplitude
-        $x        = ($this->image_width / 4); // lowest x coordinate of a pole
+        $x        = (int) ($this->image_width / 4); // lowest x coordinate of a pole
         $maxX     = $this->image_width - $x;  // maximum x coordinate of a pole
-        $dx       = mt_rand($x / 10, $x);     // horizontal distance between poles
+        $dx       = mt_rand((int) ($x / 10), (int) $x);     // horizontal distance between poles
         $y        = mt_rand(20, $this->image_height - 20);  // random y coord
         $dy       = mt_rand(20, round($this->image_height * 0.7, 0)); // y distance
         $minY     = 20;                                     // minimum y coordinate
@@ -1990,7 +1992,10 @@ class Securimage
         for ($i = 0; $i < $numpoles; ++ $i) {
             $px[$i]  = ($x + ($dx * $i)) % $maxX;
             $py[$i]  = ($y + ($dy * $i)) % $maxY + $minY;
-            $rad[$i] = mt_rand($this->image_height * 0.4, $this->image_height * 0.8);
+            $rad[$i] = mt_rand(
+                (int) ($this->image_height * 0.4),
+                (int) ($this->image_height * 0.8)
+            );
             $tmp     = ((- $this->frand()) * 0.15) - .15;
             $amp[$i] = $this->perturbation * $tmp;
         }
@@ -2026,7 +2031,7 @@ class Securimage
                     $c = imagecolorat($this->tmpimg, round($x, 0), round($y, 0));
                 }
                 if ($c != $bgCol) { // only copy pixels of letters to preserve any background image
-                    imagesetpixel($this->im, $ix, $iy, $c);
+                    imagesetpixel($this->im, (int) $ix, (int) $iy, (int) $c);
                 }
             }
         }
@@ -2044,7 +2049,7 @@ class Securimage
 
             $theta = ($this->frand() - 0.5) * M_PI * 0.33;
             $w = $this->image_width;
-            $len = mt_rand($w * 0.4, $w * 0.7);
+            $len = mt_rand((int) ($w * 0.4), (int) ($w * 0.7));
             $lwid = mt_rand(0, 2);
 
             $k = $this->frand() * 0.6 + 0.2;
