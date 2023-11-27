@@ -36,7 +36,7 @@
  * @link https://github.com/dapphp/securimage Securimage Homepage
  * @copyright 2018 Drew Phillips
  * @author Drew Phillips <drew@drew-phillips.com>
- * @version 4.0.2 (March 2018)
+ * @version 4.0.3 (ADQ. November 2023)
  * @package Securimage
  *
  * See the file CHANGES for changelog
