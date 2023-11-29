@@ -642,7 +642,7 @@ class Securimage
      *
      * @var array Array of one or more storage adapters
      */
-    protected $storage_adapters = array();
+    protected $storage_adapters = [];
 
     /**
      * Flag indicating whether or not HTTP headers will be sent when outputting
@@ -710,7 +710,7 @@ class Securimage
                     gettype($options) . ' given',
                     E_USER_WARNING
             );
-            $options = array();
+            $options = [];
         }
 
         if (function_exists('mb_internal_encoding')) {
@@ -1159,8 +1159,8 @@ class Securimage
         $input_id          = (isset($options['input_id'])) ? $options['input_id'] : 'captcha_code';
         $input_name        = (isset($options['input_name'])) ? $options['input_name'] :  $input_id;
         $input_required    = (isset($options['input_required'])) ? (bool)$options['input_required'] : true;
-        $input_attrs       = (isset($options['input_attributes'])) ? $options['input_attributes'] : array();
-        $image_attrs       = (isset($options['image_attributes'])) ? $options['image_attributes'] : array();
+        $input_attrs       = (isset($options['input_attributes'])) ? $options['input_attributes'] : [];
+        $image_attrs       = (isset($options['image_attributes'])) ? $options['image_attributes'] : [];
         $error_html        = (isset($options['error_html'])) ? $options['error_html'] : null;
         $captcha_id        = (isset($options['captcha_id'])) ? $options['captcha_id'] : self::generateCaptchaId();
 
@@ -1169,7 +1169,7 @@ class Securimage
         $securimage_path   = str_replace('\\', '/', $securimage_path);
 
         $image_attr = '';
-        if (!is_array($image_attrs)) $image_attrs = array();
+        if (!is_array($image_attrs)) $image_attrs = [];
         if (!isset($image_attrs['style'])) $image_attrs['style'] = 'float: left; padding-right: 5px';
         $image_attrs['id']  = $image_id;
 
@@ -1297,7 +1297,7 @@ class Securimage
 
         if ( ($parts & Securimage::HTML_INPUT) > 0 && $show_input) {
             $input_attr = '';
-            if (!is_array($input_attrs)) $input_attrs = array();
+            if (!is_array($input_attrs)) $input_attrs = [];
             $input_attrs['type'] = 'text';
             $input_attrs['name'] = $input_name;
             $input_attrs['id']   = $input_id;
@@ -1499,7 +1499,7 @@ class Securimage
      */
     public function getCode($deprecated = null, $returnExisting = false)
     {
-        $code = array();
+        $code = [];
 
         foreach($this->storage_adapters as $adapter) {
             $info = $adapter->get(Securimage::$_captchaId);
@@ -1707,7 +1707,7 @@ class Securimage
      */
     protected function getBackgroundFromDirectory()
     {
-        $images = array();
+        $images = [];
 
         if ( ($dh = opendir($this->background_directory)) !== false) {
             while (($file = readdir($dh)) !== false) {
@@ -1832,11 +1832,11 @@ class Securimage
             }
         }
 
-        $fonts    = array();  // list of fonts corresponding to each char $i
-        $angles   = array();  // angles corresponding to each char $i
-        $distance = array();  // distance from current char $i to previous char
-        $dims     = array();  // dimensions of each individual char $i
-        $txtWid   = 0;        // width of the entire text string, including spaces and distances
+        $fonts    = [];  // list of fonts corresponding to each char $i
+        $angles   = [];  // angles corresponding to each char $i
+        $distance = [];  // distance from current char $i to previous char
+        $dims     = [];  // dimensions of each individual char $i
+        $txtWid   = 0;   // width of the entire text string, including spaces and distances
 
         // Character positioning and angle
 
@@ -1975,11 +1975,11 @@ class Securimage
      */
     protected function distortedCopy()
     {
-        $numpoles = 3;       // distortion factor
-        $px       = array(); // x coordinates of poles
-        $py       = array(); // y coordinates of poles
-        $rad      = array(); // radius of distortion from pole
-        $amp      = array(); // amplitude
+        $numpoles = 3;  // distortion factor
+        $px       = []; // x coordinates of poles
+        $py       = []; // y coordinates of poles
+        $rad      = []; // radius of distortion from pole
+        $amp      = []; // amplitude
         $x        = (int) ($this->image_width / 4); // lowest x coordinate of a pole
         $maxX     = $this->image_width - $x;  // maximum x coordinate of a pole
         $dx       = mt_rand((int) ($x / 10), (int) $x);     // horizontal distance between poles
@@ -2177,7 +2177,7 @@ class Securimage
      */
     protected function getAudibleCode()
     {
-        $letters = array();
+        $letters = [];
         $code    = $this->getCode(null, true);
 
         if (empty($code) || empty($code->code)) {
@@ -2260,7 +2260,7 @@ class Securimage
 
         if ((int)$numWords < 1 || (int)$numWords > 5) $numWords = 1;
 
-        $words = array();
+        $words = [];
         $w     = 0;
         $tries = 0;
         do {
@@ -2539,7 +2539,7 @@ class Securimage
         }
 
         /********* Set up audio filters *****************************/
-        $filters = array();
+        $filters = [];
 
         if ($this->audio_use_noise == true) {
             // use background audio - find random file
@@ -2600,7 +2600,7 @@ class Securimage
         $return = false;
 
         if ( ($dh = opendir($this->audio_noise_path)) !== false ) {
-            $list = array();
+            $list = [];
 
             while ( ($file = readdir($dh)) !== false ) {
                 if ($file == '.' || $file == '..') continue;
